@@ -1,0 +1,3903 @@
+/*
+ * Author       : santhiyashree.j.2024.aids63
+ * Generated on : 17-Nov-2026 19:17:51
+ * Version      : 1.0
+ */
+ application "XeroBase"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "Asia/Kolkata"
+ 	time format = "24-hr"
+
+ 	forms
+	{
+		form Custom
+		{
+			displayname = "Customer_Details"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Customer_ID
+			(
+    			type = autonumber
+				start index = 2722
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Customer_Name
+			(
+    			type = name
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			Address
+			(
+    			type = address
+     			capture_coordinates = true
+     			adjust_using_map = false
+     			address_line_1
+     			(
+	     			  type = address_line_1
+	     			  displayname = "Address Line 1"
+     			) 
+     			address_line_2
+     			(
+	     			  type = address_line_2
+	     			  displayname = "Address Line 2"
+	     			 visibility = false
+     			) 
+     			district_city
+     			(
+	     			  type = district_city
+	     			  displayname = "City / District"
+     			) 
+     			state_province
+     			(
+	     			  type = state_province
+	     			  displayname = "State / Province"
+     			) 
+     			postal_Code
+     			(
+	     			  type = postal_Code
+	     			  displayname = "Postal Code"
+	     			 visibility = false
+     			) 
+     			country
+     			(
+	     			  type = country
+	     			  displayname = "Country"
+     			) 
+     			latitude
+     			(
+	     			  type = latitude
+	     			  displayname = "latitude"
+	     			 visibility = false
+     			) 
+     			longitude
+     			(
+	     			  type = longitude
+	     			  displayname = "longitude"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Phone_Number1
+			(
+    			type = phonenumber
+				displayname = "Phone_Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Loyalty_Points
+			(
+				type = number
+				displayname = "Loyalty Points"
+				initial value = 0
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Customer_Category
+			(
+				type = picklist
+				displayname = "Customer Category"
+				maxchar = 100
+				values = {"Regular","Frequent","VIP"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Feedback
+			(
+    			type = textarea
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Sentimental_Analysis_Feedback
+			(
+				type = picklist
+				maxchar = 100
+	 			row = 1
+	 			column = 1   
+				width = medium
+						AI_Properties
+						(
+									fieldtype = SentimentAnalysis
+									basefield = Feedback
+						)
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Document_Details
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Document_ID
+			(
+    			type = autonumber
+				start index = 1427
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Orders
+			(
+				type = picklist	
+				displayname = "Order"
+				values  = Print_Orders.ID
+    			displayformat = [Order_ID + " - " + Print_Type]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Document_Name
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			File_Type
+			(
+				type = picklist
+				maxchar = 100
+				values = {"PDF","DOCX","JPG","PNG"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Page_Count
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Document_Status
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Verified","Pending","Rejected"}
+				initial value = "Pending"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			OCR_Extracted_Text
+			(
+    			type = textarea
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = small
+						AI_Properties
+						(
+									fieldtype = OCR
+									basefield = Document_File
+						)
+			)
+			Document_File
+			(
+    			type = upload file
+				browse = local_drive
+				allowed file formats = {"jpg","pdf","tiff","png"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Inventory_Details
+		{
+			displayname = "Inventory Details"
+			success message = "Inventory Detail Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Inventory_ID
+			(
+    			type = autonumber
+				displayname = "Inventory ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Item_Name
+			(
+    			type = text
+				displayname = "Item Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Item_Category
+			(
+				type = picklist
+				displayname = "Item Category"
+				maxchar = 100
+				values = {"Paper","Binding Material"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Unit
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Ream","pack","Piece"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Opening_Stock
+			(
+				type = number
+				displayname = "Opening Stock"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Current_Stock
+			(
+				type = number
+				displayname = "Current Stock"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Reorder_Level
+			(
+				type = number
+				displayname = "Reorder Level"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Unit_Cost
+			(
+				displayname = "Unit Cost"
+				type = INR
+				format = commadotindian
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Supplier_Name
+			(
+    			type = text
+				displayname = "Supplier Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Last_Restocked
+			(
+    			type = date
+				displayname = "Last Restocked"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Stock_Status
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Active
+			(
+    			type = checkbox
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Loyalty_Transactions
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Transaction_ID
+			(
+    			type = autonumber
+				displayname = "Transaction ID"
+				start index = 333
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Customer
+			(
+				type = picklist	
+				values  = Custom.ID
+    			displayformat = [" " + Customer_Name.prefix + " " + Customer_Name.first_name + " " + Customer_Name.last_name + " " + Customer_Name.suffix]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Payment
+			(
+				type = picklist	
+				values  = Payment_Details.ID
+    			displayformat = [Amount]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Points
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Transaction_Type
+			(
+				type = picklist
+				displayname = "Transaction Type"
+				maxchar = 100
+				values = {"Earned","Redeemed","Adjustment"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Transaction_Date
+			(
+    			type = datetime
+				displayname = "Transaction Date"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Notes
+			(
+    			type = textarea
+				height = 100px
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Optional explanation"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Payment_Details
+		{
+			displayname = "Payment Details"
+			success message = "Payment Detail Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Payment_ID
+			(
+    			type = autonumber
+				start index = 154
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Order
+			(
+				type = picklist	
+				values  = Print_Orders.ID
+    			displayformat = [Order_ID + " - " + Total_Amount]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Amount
+			(
+				type = INR
+				format = commadotindian
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Payment_Method
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Cash","UPI","Card"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Payment_Status
+			(
+				type = radiobuttons
+				maxchar = 100
+				values = {"pending","Paid","Failed"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Payment_Date_Time
+			(
+    			type = datetime
+				displayname = "Payment_Date-Time"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Loyalty_Points_Awarded
+			(
+    			type = checkbox
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Pricing_Details
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Pricing_Details
+			(
+    			type = autonumber
+				start index = 27
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Print_Type
+			(
+				type = radiobuttons
+				maxchar = 100
+				values = {"Black & White","Colour"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Rate_Per_Page
+			(
+				type = INR
+				format = commadotindian
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Paper_Size
+			(
+				type = picklist
+				maxchar = 100
+				values = {"A4","A3"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Binding_Charge
+			(
+				type = INR
+				format = commadotindian
+				initial value = 0
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Active
+			(
+    			type = checkbox
+				initial value = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Print_Orders
+		{
+			displayname = "Print Orders"
+			success message = "Order Printed Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Order_ID
+			(
+    			type = autonumber
+				displayname = "Order ID"
+				start index = 501
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Customer
+			(
+				type = picklist	
+				values  = Custom.ID
+    			displayformat = [" " + Customer_ID + " " + Customer_Name.first_name + " " + Customer_Name.last_name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Print_Type
+			(
+				type = radiobuttons
+				displayname = "Print Type"
+				maxchar = 100
+				values = {"Black & White","Colour"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Pages
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Copies
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Total_Amount
+			(
+				displayname = "Total Amount"
+				type = INR
+				format = commadotindian
+				decimalplace = 0
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Order_Status
+			(
+				type = picklist
+				displayname = "Order Status"
+				maxchar = 100
+				values = {"Pending","Accepted","Printing","Ready","Completed","Rejected"}
+				initial value = "Pending"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Order_Priority
+			(
+				type = picklist
+				displayname = "Order Priority"
+				maxchar = 100
+				values = {"Normal","High","Urgent"}
+				initial value = "Normal"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Expected_Completion
+			(
+    			type = date
+				displayname = "Expected Completion"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Is_Overdue
+			(
+    			type = checkbox
+				displayname = "Is Overdue"
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Order_Priority_Prediction
+			(
+    			type = text
+				displayname = "AI_Order_Priority"
+	 			row = 1
+	 			column = 1   
+				width = medium
+						AI_Properties
+						(
+									fieldtype = Prediction
+									modelname = "PREDICTION_PRIORITY"
+									supportingfield = {Copies,Expected_Completion,Order_Status,Pages,Print_Type}
+						)
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Print"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Stock_Movements
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Movement_ID
+			(
+    			type = autonumber
+				displayname = "Movement ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Inventory_Item
+			(
+				type = picklist	
+				displayname = "Inventory Item"
+				values  = Inventory_Details.ID
+    			displayformat = [Item_Name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Movement_Type
+			(
+				type = picklist
+				displayname = "Movement Type"
+				maxchar = 100
+				values = {"Stock In","Stock Out","Adjustment"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Quantity
+			(
+				type = number
+    			description
+    			[
+    				type = help_text
+    			 	message = "Positive Number Only"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Movement_Date
+			(
+    			type = date
+				displayname = "Movement Date"
+				initial value = "21-Oct-2026"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Reference
+			(
+    			type = text
+    			description
+    			[
+    				type = help_text
+    			 	message = "Invoice, order, or reason"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Notes
+			(
+    			type = textarea
+				height = 100px
+    			description
+    			[
+    				type = help_text
+    			 	message = "Optional explanation"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+	}
+	reports
+	{
+		default list Loyalty_Customers_Report
+		{
+			displayName = "Loyalty_Customers_Report"
+			show all rows from Custom    
+			(
+				Customer_Name 
+				Customer_ID
+				Phone_Number1 as "Phone_Number"
+				(
+					displayformat = plainnumber
+				)
+				Email
+				Loyalty_Points as "Loyalty Points"
+				Customer_Category as "Customer Category"
+				Feedback
+				Sentimental_Analysis_Feedback
+				Address 
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+			)
+
+		}
+		default list All_Orders
+		{
+			displayName = "All Orders"
+			show all rows from Print_Orders    
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Pages
+				Copies
+				Total_Amount as "Total Amount"
+				Order_Status as "Order Status"
+				Order_Priority as "Order Priority"
+				Expected_Completion as "Expected Completion"
+				Is_Overdue as "Is Overdue"
+				Order_Priority_Prediction as "AI_Order_Priority"
+			)
+
+		}
+		default list All_Payment_Details
+		{
+			displayName = "All Payment Details"
+			show all rows from Payment_Details    
+			(
+				Payment_ID
+				Order
+				Amount
+				Payment_Method
+				Payment_Status
+				Payment_Date_Time as "Payment_Date-Time"
+				Loyalty_Points_Awarded
+			)
+
+		}
+		list All_Print_Orders
+		{
+			displayName = "All_Print_Orders"
+			show all rows from Print_Orders    
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Pages
+				Copies
+				Total_Amount as "Total Amount"
+				Order_Status as "Order Status"
+			)
+
+		}
+		list Payment_Report
+		{
+			displayName = "Payment_Report"
+			show all rows from Payment_Details    
+			(
+				Payment_ID
+				Order
+				Amount
+				Payment_Method
+				Payment_Status
+				Payment_Date_Time as "Payment_Date-Time"
+			)
+
+		}
+		default list Document_Details_Report
+		{
+			displayName = "Document_Details Report"
+			show all rows from Document_Details    
+			(
+				Document_ID
+				Orders as "Order"
+				Document_Name
+				File_Type
+				Page_Count
+				Document_Status
+				OCR_Extracted_Text
+				Document_File
+			)
+
+		}
+		default list Pricing_Details_Report
+		{
+			displayName = "Pricing_Details Report"
+			show all rows from Pricing_Details    
+			(
+				Pricing_Details
+				Print_Type
+				Rate_Per_Page
+				Paper_Size
+				Binding_Charge
+				Active
+			)
+
+		}
+		list Customer_Order_History
+		{
+			displayName = "Customer_Order_History"
+			show all rows from Print_Orders    
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Pages
+				Copies
+				Total_Amount as "Total Amount"
+				Order_Status as "Order Status"
+			)
+
+			filters
+			(
+				Customer
+			)
+		}
+		list Overdue_Orders
+		{
+			displayName = "Overdue_Orders"
+			show all rows from Print_Orders  [Expected_Completion < '30-Oct-2026' && Order_Status != "Completed" || Order_Status == "Rejected"]  
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Pages
+				Copies
+				Total_Amount as "Total Amount"
+				Order_Status as "Order Status"
+				Order_Priority as "Order Priority"
+				Expected_Completion as "Expected Completion"
+				Is_Overdue as "Is Overdue"
+			)
+
+		}
+		default list Stock_Movements_Report
+		{
+			displayName = "Stock_Movements Report"
+			show all rows from Stock_Movements    
+			(
+				Movement_ID as "Movement ID"
+				Inventory_Item as "Inventory Item"
+				Movement_Type as "Movement Type"
+				Quantity
+				Movement_Date as "Movement Date"
+				Reference
+				Notes
+			)
+
+		}
+		list Low_Stock_Report
+		{
+			displayName = "Low_Stock_Report"
+			show all rows from Inventory_Details  [Stock_Status == "Low Stock"]  
+			(
+				Inventory_ID as "Inventory ID"
+				Item_Name as "Item Name"
+				Item_Category as "Item Category"
+				Unit
+				Opening_Stock as "Opening Stock"
+				Current_Stock as "Current Stock"
+				Reorder_Level as "Reorder Level"
+				Unit_Cost as "Unit Cost"
+				Supplier_Name as "Supplier Name"
+				Last_Restocked as "Last Restocked"
+				Active
+				Stock_Status
+			)
+
+		}
+		list Upcoming_Orders_Report
+		{
+			displayName = "Upcoming_Orders_Report"
+			show all rows from Print_Orders  [Order_Status != "Completed" && Order_Status != "Rejected" && Expected_Completion < zoho.currentdate]  
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Pages
+				Copies
+				Total_Amount as "Total Amount"
+				Order_Status as "Order Status"
+				Order_Priority as "Order Priority"
+				Expected_Completion as "Expected Completion"
+			)
+
+		}
+		kanban Order_Status_Kanban
+		{
+			displayName = "Order Status Kanban"
+			show all rows from Print_Orders    
+			(
+				Order_ID as "Order ID"
+				Customer
+				Print_Type as "Print Type"
+				Total_Amount as "Total Amount"
+				Expected_Completion as "Expected Completion"
+				Order_Status as "Order Status"
+				Pages
+				Copies
+				Order_Priority as "Order Priority"
+				Is_Overdue as "Is Overdue"
+			)
+
+			options
+			(
+	 			display field = Order_Status
+				filter type  = manual
+				record count  = enable
+	 		)
+		}
+		kanban Inventory_Kanban
+		{
+			displayName = "Inventory_Kanban"
+			show all rows from Inventory_Details    
+			(
+				Inventory_ID as "Inventory ID"
+				Item_Name as "Item Name"
+				Item_Category as "Item Category"
+				Unit
+				Opening_Stock as "Opening Stock"
+				Current_Stock as "Current Stock"
+				Reorder_Level as "Reorder Level"
+				Unit_Cost as "Unit Cost"
+				Supplier_Name as "Supplier Name"
+				Last_Restocked as "Last Restocked"
+				Stock_Status
+				Active
+			)
+
+			options
+			(
+	 			display field = Item_Category
+	 		)
+		}
+		calendar Transaction_Calender
+		{
+			displayName = "Transaction_Calender"
+			show all rows from Loyalty_Transactions    
+			(
+				Transaction_ID as "Transaction ID"
+				Customer
+				Payment
+				Points
+				Transaction_Type as "Transaction Type"
+				Transaction_Date as "Transaction Date"
+				Notes
+			)
+
+			options
+			(
+				display field = Transaction_Date
+				start date = Transaction_Date
+			)
+		}
+		map Location_Report
+		{
+			displayName = "Location_Report"
+			show all rows from Custom    
+			(
+				Customer_ID
+				Customer_Name 
+				Address 
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				Phone_Number1 as "Phone_Number"
+				(
+					displayformat = plainnumber
+				)
+				Email
+				Loyalty_Points as "Loyalty Points"
+				Customer_Category as "Customer Category"
+				Feedback
+				Sentimental_Analysis_Feedback
+			)
+
+			options
+			(
+	 			display field = Address
+	 		)
+			conditional formatting
+			(
+				"pin1"
+				{
+				condition = (Address.district_city == "Chennai")
+				format = "color:#f6abbb;map-icon:users-2-woman;map-icon-color:#ffffff;"
+				}
+				"pin2"
+				{
+				condition = (Address.district_city == "Thanjavur")
+				format = "color:#dfabf6;map-icon:users-2-woman;map-icon-color:#ffffff;"
+				}
+				"pin3"
+				{
+				condition = (Address.district_city == "Virudhunagar")
+				format = "color:#aec6f8;map-icon:users-2-woman;map-icon-color:#ffffff;"
+				}
+			)
+		}
+		list All_Details
+		{
+			displayName = "All_Details"
+			show all rows from Inventory_Details    
+			(
+				Inventory_ID as "Inventory ID"
+				Item_Name as "Item Name"
+				Item_Category as "Item Category"
+				Unit
+				Opening_Stock as "Opening Stock"
+				Current_Stock as "Current Stock"
+				Reorder_Level as "Reorder Level"
+				Unit_Cost as "Unit Cost"
+				Supplier_Name as "Supplier Name"
+				Last_Restocked as "Last Restocked"
+				Stock_Status
+				Active
+			)
+
+		}
+		pivotchart Sentiment_Chart
+		{
+			displayname = "Sentiment_Chart"
+			based on Autoview_1793645966321_Custom
+				show all rows from Custom
+				(
+			Customer_ID 
+			Customer_Name 
+ 			(
+ 				first_name as "Customer_Name"
+ 				prefix as "Customer_Name.Prefix"
+ 				last_name as "Customer_Name.Last Name"
+ 				suffix as "Customer_Name.Suffix"
+ 			)
+			Phone_Number1  as "Phone_Number"
+			Email 
+			Sentimental_Analysis_Feedback 
+				)
+		}
+		pivottable Pivot_Table
+		{
+			displayname = "Pivot_Table"
+			based on Autoview_1793652004849_Payment_Details
+				show all rows from Payment_Details
+				(
+			Payment_ID 
+			Order 
+			Amount 
+			Payment_Method 
+			Payment_Status 
+			Payment_Date_Time  as "Payment_Date-Time"
+			Loyalty_Points_Awarded 
+				)
+		}
+	}
+	pages
+	{
+		page Staff_Control_Center
+		{
+			displayname = "Staff Control Center"
+			Content="<zml    \t\t\n\t\t\n\t\t\tbgColor='#DED3E6'\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Staff_Control_Center_.title-bar.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#FFFFFF'\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '24px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpaddingTop = '0px'\n\tpaddingLeft = '350px'\n\tpaddingRight = '0px'\n\tpaddingBottom = '0px'\n\tcolor = '#59387A'\n\tsize = '28px'\n\tuppercase = 'true' \n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\n\t  value = 'Staff Control Center'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='6px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpaddingTop = '0px'\n\tpaddingLeft = '400px'\n\tpaddingRight = '0px'\n\tpaddingBottom = '0px'\n\tcolor = '#000000'\n\tsize = '13px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'Manage daily Xerox shop operations.'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='KPI_Orders.kpi-strip.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = 'theme:10'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '24px'\n\tbgColor = '#E6E1F2'\n\n    borderColor = '#222326'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '0px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\n\t\twidth = '25%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#000000'\n\tsize = '11px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'TOTAL ORDERS'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='6px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '25%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#000000'\n\tsize = '11px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'PENDING ORDERS'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='6px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t\tcriteria = 'Order_Status == &quot;Pending&quot;'\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '25%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#000000'\n\tsize = '11px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'READY ORDERS'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='6px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t\tcriteria = 'Order_Status == &quot;Ready&quot;'\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '25%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#000000'\n\tsize = '11px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'COMPLETED ORDERS'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='6px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t\tcriteria = 'Order_Status == &quot;Completed&quot;'\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='50%'\n   \t>\n\t<report \n\telementName='Report'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'Sentiment_Chart'\n\t\tallowPublicAccess = 'true'\n\t\n\t\tiszreport = 'true'\n\theightType = 'auto'\n\theightValue = '700'\n/>\n</column><column\n   \t\t width='50%'\n   \t>\n\t<chart \n\telementName='Chart'\n\n\ttype = 'Line'\n\tbgColor = '#FFFFFF'\n\ttheme = '#8A3DFB'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'Print_Orders'\n\txfield = 'Pages'\n\tyfields = 'value:Copies'\n/>\n\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Order_Management_.welcome-links.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#D5C9F0'\n\n    action = 'OpenURL'\n\t\turl = 'https://creatorapp.zohopublic.in/santhiyashree.j.2024.aids63/xerobase/report-perma/All_Orders/tVBOq6W19HK9S3V4sA1haKdE90s9y5QPfATnNzWmJPSw44XhQUn4nRkFyYyt0eZGtMUnR11QgCYQqa13d9n9r6nam1sdpBvz8fZS' \n\t\ttarget = 'new-window'\n    borderColor = '#222326'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '24px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '12px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'ORDER MANAGEMENT'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='8px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '28px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Order Management'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpaddingLeft = '24px'\n\tpaddingRight = '24px'\n\tpaddingBottom = '24px'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenReport'\n\t\tcomponentLinkName = 'All_Orders'\n\t\ttarget = 'same-window'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    action = 'OpenURL'\n\t\turl = 'https://creatorapp.zohopublic.in/santhiyashree.j.2024.aids63/xerobase/report-perma/All_Orders/tVBOq6W19HK9S3V4sA1haKdE90s9y5QPfATnNzWmJPSw44XhQUn4nRkFyYyt0eZGtMUnR11QgCYQqa13d9n9r6nam1sdpBvz8fZS' \n\t\ttarget = 'new-window'\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingTop = '0px'\n\tpaddingLeft = '10px'\n\tpaddingRight = '0px'\n\tpaddingBottom = '0px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n    action = 'OpenReport'\n\t\tcomponentLinkName = 'Customer_Order_History'\n\t\ttarget = 'new-window'\n    borderColor = '#222326'\n    borderWidth = '0px'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '0px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'All Orders'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#000000'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'View all orders'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Inventory_Managem.welcome-links.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#D0C7EB'\n\n    borderColor = '#CFBFFD'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '24px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '12px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'INVENTORY MANAGEMENT'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='8px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '28px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Inventory Management'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpaddingLeft = '24px'\n\tpaddingRight = '24px'\n\tpaddingBottom = '24px'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Inventory_Details'\n\t\ttarget = 'same-window'\n\t\twidth = '49%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\n\t  value = 'Inventory Details'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'View inventory details'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '2%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc><pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Stock_Movements'\n\t\ttarget = 'same-window'\n\t\twidth = '49%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Stock Movements'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'View stock movements'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Payment_Managemen.welcome-links.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#CCC3E8'\n\n    borderColor = '#222326'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '24px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '12px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'PAYMENT MANAGEMENT'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='8px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '28px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Payment Management'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpaddingLeft = '24px'\n\tpaddingRight = '24px'\n\tpaddingBottom = '24px'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Payment_Details'\n\t\ttarget = 'same-window'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Payment Details'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'View payment details'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Quick_Actions_Pan.welcome-links.tinted.comfortable'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#CDC3EB'\n\n    borderColor = '#222326'\n    borderWidth = '0px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '24px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '12px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#FFFFFF'\n    borderWidth = '0px'\n\n\t  value = 'QUICK ACTIONS'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='8px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '28px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Quick Actions'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpaddingLeft = '24px'\n\tpaddingRight = '24px'\n\tpaddingBottom = '24px'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Print_Orders'\n\t\ttarget = 'same-window'\n\t\twidth = '23.5%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Print Order'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'Create a new print order'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '2%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc><pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Payment_Details'\n\t\ttarget = 'same-window'\n\t\twidth = '23.5%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Add Payment'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'Record a payment'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '2%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc><pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Stock_Movements'\n\t\ttarget = 'same-window'\n\t\twidth = '23.5%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'Add Stock Movement'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'Log stock movement'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\n\t\twidth = '2%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc><pc \n\t\tpadding = '14px'\n\tbgColor = '#F7F7F7'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Custom'\n\t\ttarget = 'same-window'\n\t\twidth = '23.5%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '8px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\twidth = '20px'\n\theight = '20px'\n\ttype = 'icon'\n\tvalue = 'ui-2-fat-add'\n\tsize = '12px'\n\tcornerRadius = '0px'\n\ticonType = 'solid'\n/>\n</pc><pc \n\t\tpaddingLeft = '10px'\n\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#BC2AE7'\n\tsize = '13px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#CB7718'\n    borderWidth = '0px'\n\n\t  value = 'View Customers'\n>\n</text>\n\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='2px'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#8A3DFB'\n\tsize = '11px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#F9E4CC'\n    borderWidth = '0px'\n\n\t  value = 'View customer list'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+		page Customer_Dashboard
+		{
+			displayname = "Customer_Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<widgets elementName='Widget' importedTemplate='true'/>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+		page Shop_Dashboard
+		{
+			displayname = "Shop_Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\tbgColor='#FFF5F5'\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 10'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#EBD5D7'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#FF7C89'\n\tsize = '36px'\n\tbold = 'true' \n\tfontFamily = 'RobotoSlab, arimo, sans-serif' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#FF4C2F'\n    borderWidth = '0px'\n\n\t  value = 'XEROBASE'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Xerox Shop Management System'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<row>\n\t<column\n   \t\t width='18%'\n   \t>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 2'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<button \n\t\tmargin = '0px'\n\tpaddingTop = '12px'\n\tpaddingLeft = '15px'\n\tpaddingRight = '15px'\n\tpaddingBottom = '12px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Print_Orders'\n\t\ttarget = 'new-window'\n\tcolor = '#000000'\n\tsize = '16px'\n    borderColor = '#FFFFFF'\n    borderWidth = '1px'\n\ttext ='Print Orders'\n\t\tbgColor = '#FFBCC1'\n\t\tcornerRadius = '60px' \n/>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 5'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<button \n\t\tmargin = '0px'\n\tpaddingTop = '12px'\n\tpaddingLeft = '15px'\n\tpaddingRight = '15px'\n\tpaddingBottom = '12px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Document_Details'\n\t\ttarget = 'new-window'\n\tcolor = '#000000'\n\tsize = '16px'\n    borderColor = '#FFFFFF'\n    borderWidth = '1px'\n\ttext ='Document Details'\n\t\tbgColor = '#FFBCC1'\n\t\tcornerRadius = '60px' \n/>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row>\n</column><column\n   \t\t width='17%'\n   \t>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 4'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<button \n\t\tmargin = '0px'\n\tpaddingTop = '12px'\n\tpaddingLeft = '15px'\n\tpaddingRight = '15px'\n\tpaddingBottom = '12px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Custom'\n\t\ttarget = 'new-window'\n\tcolor = '#000000'\n\tsize = '16px'\n    borderColor = '#FFFFFF'\n    borderWidth = '1px'\n\ttext ='Customer Details'\n\t\tbgColor = '#FFBCC1'\n\t\tcornerRadius = '60px' \n/>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 3'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<button \n\t\tmargin = '0px'\n\tpaddingTop = '12px'\n\tpaddingLeft = '15px'\n\tpaddingRight = '15px'\n\tpaddingBottom = '12px'\n\n    action = 'OpenForm'\n\t\tcomponentLinkName = 'Payment_Details'\n\t\ttarget = 'new-window'\n\tcolor = '#000000'\n\tsize = '16px'\n    borderColor = '#FFFFFF'\n    borderWidth = '1px'\n\ttext ='Payment Details'\n\t\tbgColor = '#FFBCC1'\n\t\tcornerRadius = '60px' \n/>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row>\n</column><column\n   \t\t width='34%'\n   \t>\n\t<board\n    \n\tbgColor = '#FFFFFF'\n        bgColorType = 'solid'\n\tpadding = '0px'\nelementName='Board'\n    layoutType = 'grid'\n        items = '2'\n    appLinkName = 'thisapp'\n    formLinkName = 'Payment_Details'\n    rankBy = 'ID'\n    rankOrder = 'highestToLowest'\n    rankAggregate = 'count'\n    limit = '3'\n    groupBy = 'Payment_Method'\n>\n<boardHeader>\n    <pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpaddingTop = '14px'\n\tpaddingLeft = '15px'\n\tpaddingRight = '15px'\n\tpaddingBottom = '14px'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#FF596F'\n\tsize = '16px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\n\t  value = 'Payment Methods'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</boardHeader>\n<boardLayout\n                paddingRight = '15px'\n                paddingBottom = '14px'\n                paddingLeft = '15px'\n                paddingTop = '2px'\n                itemGap = '10px'\n>\n    <pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '10px'\n\tbgColor = '#F0C9CC'\n\n    borderColor = '#FFFFFF'\n    borderWidth = '1px'\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '12px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginBottom = '10px'\n\n    borderWidth = '0px'\n\tcolor = '#000000'\n\tbgColor = '#F7F7FB'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'shopping-mobile-cart'\n\tsize = '22px'\n\tcornerRadius = '20px'\n\ticonType = 'outline'\n/>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginBottom = '10px'\n\tcolor = '#000000'\n\tsize = '16px'\n\ttype = 'boardData'\n\n\n    lineHeight = '22'\n    numOfLines = '1'\n\n\n\n\n\n\t  value = 'groupedField'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tcolor = 'theme'\n\tsize = '21px'\n\tbold = 'true' \n\ttype = 'boardData'\n\n\n    lineHeight = '28'\n    numOfLines = '1'\n\n\n\n\n\n\t  value = 'rankAggregate'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</boardLayout>\n</board>\n</column><column\n   \t\t width='31%'\n   \t>\n\t<chart \n\telementName='Chart 3'\n\n\ttype = 'Bar'\n\tbgColor = '#FFFFFF'\n\ttheme = '#FFA0A8'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'Custom'\n\txfield = 'Sentimental_Analysis_Feedback'\n\tyfields = 'count:Customer_ID'\n/>\n\n</column>\n</row><row>\n\t<column\n   \t\t width='34%'\n   \t>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Open Customer Dashboard'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n    action = 'OpenPage'\n\t\tcomponentLinkName = 'Customer_Dashboard'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '2px'\n\tpadding = '0px'\n\tcolor = '#FFA0A8'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#4C7DE8'\n    borderWidth = '0px'\n\n\t  value = 'Customer Portal \u2192'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<chart \n\telementName='Chart'\n\n\ttype = 'Scatter'\n\tbgColor = '#FFFFFF'\n\ttheme = '#CF6C59'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'Custom'\n\txfield = 'Loyalty_Points'\n\tyfields = 'count:Customer_ID'\n/>\n\n</column>\n</row>\n</column><column\n   \t\t width='33%'\n   \t>\n\t<gauge \n\telementName='Gauge'\n\n\tcolor = '#000000'\n\tsize = '20px'\n\tfontFamily = 'default' \n\tbgColor = '#FFFFFF'\n\ttheme = '#E64F00'\n\tdisplayType = 'actual'\n\ttype = '3'\n\tvalue = 'thisapp.Payment_Details.Amount.sum'\n>\n<target size=\"15px\" color=\"#7F7F7F\" fontFamily=\"default\" value=\"2500\"\n/><ranges>\n\t\t\t<range color=\"#FFDDCB\" width=\"50\" />\n\t\t<range color=\"#FFBB97\" width=\"50\" />\n</ranges><maximumvalue size=\"15px\" color=\"#7F7F7F\" value=\"5000\" \n/>\n</gauge>\n</column><column\n   \t\t width='33%'\n   \t>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<panel elementName='Panel 6'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Open Staff Dashboard'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n    action = 'OpenPage'\n\t\tcomponentLinkName = 'Staff_Control_Center'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '2px'\n\tpadding = '0px'\n\tcolor = '#FFA0A8'\n\tsize = '24px'\n\tbold = 'true' \n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#4C7DE8'\n    borderWidth = '0px'\n\n\t  value = 'Staff Control Center \u2192'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<chart \n\telementName='Chart 2'\n\n\ttype = 'Donut'\n\tbgColor = '#FFFFFF'\n\ttheme = '#FFA0A8'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'Print_Orders'\n\txfield = 'Order_Status'\n\tyfields = 'count:Order_ID'\n/>\n\n</column>\n</row>\n</column>\n</row>\n</column>\n</row><row>\n\t<column\n   \t\t width='24%'\n   \t>\n\t<panel elementName='Panel'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\tcolor = '#FFFFFF'\n\tbgColor = '#FFBCC1'\n\twidth = '52px'\n\theight = '52px'\n\ttype = 'icon'\n\tvalue = 'files-2-docx'\n\tsize = '32px'\n\tcornerRadius = '26px'\n\ticonType = 'solid'\n/>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#FF7C89'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#0ABB51'\n    borderWidth = '0px'\n\n\t\tcriteria = 'Order_Status == &quot;Ready&quot;'\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Ready for Pickup'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='27%'\n   \t>\n\t<panel elementName='Panel 9'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\tcolor = '#FFFFFF'\n\tbgColor = '#FFBCC1'\n\twidth = '52px'\n\theight = '52px'\n\ttype = 'icon'\n\tvalue = 'files-2-docx'\n\tsize = '32px'\n\tcornerRadius = '26px'\n\ticonType = 'solid'\n/>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#FF7C89'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'COMMA'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#0ABB51'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.Print_Orders.Total_Amount.sum'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Total Amount'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='25%'\n   \t>\n\t<panel elementName='Panel 8'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\tcolor = '#FFFFFF'\n\tbgColor = '#FFBCC1'\n\twidth = '52px'\n\theight = '52px'\n\ttype = 'icon'\n\tvalue = 'files-2-docx'\n\tsize = '32px'\n\tcornerRadius = '26px'\n\ticonType = 'solid'\n/>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#FF7C89'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#0ABB51'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Total Orders'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='24%'\n   \t>\n\t<panel elementName='Panel 7'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmargin = '0px'\n\n    borderColor = '#000000'\n    borderWidth = '0px'\n\tcolor = '#FFFFFF'\n\tbgColor = '#FFBCC1'\n\twidth = '52px'\n\theight = '52px'\n\ttype = 'icon'\n\tvalue = 'files-2-docx'\n\tsize = '32px'\n\tcornerRadius = '26px'\n\ticonType = 'solid'\n/>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#FF7C89'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#0ABB51'\n    borderWidth = '0px'\n\n\t\tcriteria = 'Order_Status == &quot;Pending&quot;'\n\t  value = 'thisapp.Print_Orders.ID.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tpadding = '0px'\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '0px'\n\n\n\n\n\n    borderColor = '#333333'\n    borderWidth = '0px'\n\n\t  value = 'Pending Orders'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+	}
+
+
+		 functions
+		 {
+			 Deluge
+			 {
+				 int Calculate_Loyalty_Points(float amount)
+                 {
+                 	basePoints = amount / 50;
+                 	floorPoints = basePoints.floor();
+                 	points = floorPoints.toLong();
+                 	if(points < 0 || amount < 50)
+                 	{
+                 		points = 0;
+                 	}
+                 	return points;
+                 }
+			 }
+		 }
+
+
+		workflow
+		{
+		form
+		{
+			Calculate_Print_Amount as "Calculate_Print_Amount"
+			{
+				type =  form
+				form = Print_Orders
+
+				record event = on add or edit
+
+				on validate
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											pricing = Pricing_Details[Print_Type == input.Print_Type && Active == true];
+										if(pricing.count() > 0)
+										{
+											rate = pricing.Rate_Per_Page;
+											input.Total_Amount = input.Pages * input.Copies * rate;
+										}
+										else
+										{
+											alert "No active price found for this print type. Please check Pricing Details.";
+											cancel submit;
+										}
+						)
+					}
+				}
+
+			}
+			Validate_Print_Order as "Validate_Print_Order"
+			{
+				type =  form
+				form = Print_Orders
+
+				record event = on add or edit
+
+				on validate
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Pages <= 0)
+										{
+											alert "Pages must be greater than zero.";
+											cancel submit;
+										}
+										if(input.Copies <= 0)
+										{
+											alert "Copies must be greater than zero.";
+											cancel submit;
+										}
+						)
+					}
+				}
+
+			}
+			Validate_Payment as "Validate_Payment"
+			{
+				type =  form
+				form = Payment_Details
+
+				record event = on add or edit
+
+				on validate
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Amount < 0)
+										{
+											alert "Payment amount cannot be negative.";
+											cancel submit;
+										}
+						)
+					}
+				}
+
+			}
+			Update_Inventory_Stock as "Update_Inventory_Stock"
+			{
+				type =  form
+				form = Stock_Movements
+
+				record event = on add or edit
+
+				on validate
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Quantity <= 0)
+										{
+											alert "Quantity must be greater than zero.";
+											cancel submit;
+										}
+										itemRecord = Inventory_Details[ID == input.Inventory_Item];
+										if(itemRecord.count() == 0)
+										{
+											alert "Please select a valid inventory item.";
+											cancel submit;
+										}
+										if(input.Movement_Type == "Stock Out" && itemRecord.Current_Stock < input.Quantity)
+										{
+											alert "Insufficient stock available.";
+											cancel submit;
+										}
+						)
+					}
+				}
+
+			}
+			Apply_Stock_Movement as "Apply_Stock_Movement"
+			{
+				type =  form
+				form = Stock_Movements
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											itemRecord = Inventory_Details[ID == input.Inventory_Item];
+										if(itemRecord.count() > 0)
+										{
+											if(input.Movement_Type == "Stock In")
+											{
+												itemRecord.Current_Stock=itemRecord.Current_Stock + input.Quantity;
+											}
+											else if(input.Movement_Type == "Stock Out")
+											{
+												itemRecord.Current_Stock=itemRecord.Current_Stock - input.Quantity;
+											}
+										}
+						)
+					}
+				}
+
+			}
+			Update_Stock_Status as "Update_Stock_Status"
+			{
+				type =  form
+				form = Inventory_Details
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Current_Stock <= input.Reorder_Level)
+										{
+											input.Stock_Status = "Low Stock";
+										}
+										else
+										{
+											input.Stock_Status = "In Stock";
+										}
+						)
+					}
+				}
+
+			}
+			Award_Customer_Loyalty_Po as "Award_Customer_Loyalty_Points"
+			{
+				type =  form
+				form = Payment_Details
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Payment_Status == "Paid" && input.Loyalty_Points_Awarded == false && input.Amount >= 50)
+										{
+											orderRecord = Print_Orders[ID == input.Order];
+											if(orderRecord.count() > 0)
+											{
+												customerRecord = Custom[ID == orderRecord.Customer];
+												if(customerRecord.count() > 0)
+												{
+													existingTransaction = Loyalty_Transactions[Payment == input.ID];
+													if(existingTransaction.count() == 0)
+													{
+														points = thisapp.Calculate_Loyalty_Points(input.Amount);
+														insert into Loyalty_Transactions
+														[
+															Customer=customerRecord.ID
+															Payment=input.ID
+															Points=points
+															Transaction_Type="Earned"
+															Transaction_Date=zoho.currenttime
+															Notes="Loyalty points awarded for paid payment"
+															Added_User=zoho.loginuser
+														]
+														customerRecord.Loyalty_Points=ifnull(customerRecord.Loyalty_Points,0) + points;
+														input.Loyalty_Points_Awarded = true;
+													}
+												}
+											}
+										}
+						)
+					}
+				}
+
+			}
+			Update_Customer_Category as "Update_Customer_Category"
+			{
+				type =  form
+				form = Custom
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											points = input.Loyalty_Points;
+										if(points >= 50)
+										{
+											input.Customer_Category = "VIP";
+										}
+										else if(points >= 10)
+										{
+											input.Customer_Category = "Frequent";
+										}
+										else
+										{
+											input.Customer_Category = "Regular";
+										}
+						)
+					}
+				}
+
+			}
+			Check_Order_Deadline as "Check_Order_Deadline"
+			{
+				type =  form
+				form = Print_Orders
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Order_Status != "Completed" && input.Order_Status != "Rejected" && input.Expected_Completion != null && input.Expected_Completion < zoho.currenttime)
+										{
+											input.Is_Overdue = true;
+										}
+										else
+										{
+											input.Is_Overdue = false;
+										}
+						)
+					}
+				}
+
+			}
+			CRM as "CRM"
+			{
+				type =  form
+				form = Custom
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+							ZohoCRM.v2.createContact(data:{"Email":"Email","Last_Name":"Customer_Name.last_name"},connection:"zoho_crm_connection");
+					}
+				}
+
+			}
+		}
+
+		schedule
+		{
+			Daily_Overdue_Order_Check as "Daily_Overdue_Order_Check"
+			{
+				type =  schedule
+					status = inactive
+				start = "2026-10-21 22:43:25"
+				frequency = daily
+				time zone = "Asia/Kolkata"
+				on start
+				{
+					actions 
+					{
+					on load
+					(
+						orders = Print_Orders[ID != 0];
+										for each  orderRecord in orders
+										{
+											if(orderRecord.Expected_Completion != null)
+											{
+												if(orderRecord.Expected_Completion < zoho.currenttime && orderRecord.Order_Status != "Completed" && orderRecord.Order_Status != "Rejected")
+												{
+													orderRecord.Is_Overdue=true;
+												}
+												else
+												{
+													orderRecord.Is_Overdue=false;
+												}
+											}
+										}
+					)
+					}
+				}
+			}
+			Daily_Overdue_Email_Notification as "Daily Overdue Email Notification"
+			{
+				type =  schedule
+					status = inactive
+				start = "2026-10-28 09:55:00"
+				frequency = daily
+				time zone = "Asia/Kolkata"
+				on start
+				{
+					actions 
+					{
+					on load
+					(
+						overdueOrders = Print_Orders[Is_Overdue == true];
+										if(overdueOrders.count() > 0)
+										{
+											messageContent = "<h2>Overdue Print Orders Summary</h2><p>The following orders are overdue:</p><ul>";
+											for each  order in overdueOrders
+											{
+												customerName = order.Customer.Customer_Name.first_name + " " + order.Customer.Customer_Name.last_name;
+												expectedDate = toString(order.Expected_Completion,"dd-MMM-yyyy");
+												messageContent = messageContent + "<li><strong>Order ID:</strong> " + order.Order_ID + " - <strong>Customer:</strong> " + customerName + " - <strong>Expected Date:</strong> " + expectedDate + " - <strong>Status:</strong> " + order.Order_Status + "</li>";
+											}
+											messageContent = messageContent + "</ul><p>Total Overdue Orders: " + overdueOrders.count() + "</p>";
+											adminEmail = thisapp.permissions.adminEmailIds();
+											sendmail
+											[
+												from :zoho.adminuserid
+												to :adminEmail
+												subject :"Overdue Print Orders Alert - " + today
+												message :messageContent
+												content type :HTML
+											]
+										}
+										else
+										{
+											info "No overdue orders found.";
+										}
+					)
+					}
+				}
+			}
+		}
+
+		approval
+		{
+			Print_Order_Approval as "Print_Order_Approval"
+			{
+				type =  approval
+				form = Print_Orders
+				display fields = [Order_ID,Customer,Print_Type,Pages,Copies,Total_Amount,Order_Status]
+				on start
+				{
+				}
+				on level 1
+				{
+					on approve 
+					{
+						actions 
+						{
+							sendmail
+							(
+								from : "zoho.loginuserid"
+								to : approver.submitter
+								subject : "Approval Request"
+								message : "Your request has been approved."
+							)
+						}
+						actions 
+						{
+						update Print_Orders[ID == input.ID]
+						[
+							Order_Status = "Accepted"
+						]
+						}
+					}
+					on reject
+					{
+
+						actions 
+						{
+							sendmail
+							(
+								from : "zoho.loginuserid"
+								to : approver.submitter
+								subject : "Approval Request"
+								message : "Your request has been rejected."
+							)
+						}
+						actions 
+						{
+						update Print_Orders[ID == input.ID]
+						[
+							Order_Status = "Rejected"
+						]
+						}
+					}
+				}
+			}
+		}
+
+
+
+	}
+	share_settings
+	{
+			"Developer"
+			{
+				name = "Developer"
+				type = Developer
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Developer Profile\n"
+			}
+			"Customer1"
+			{
+				name = "Customer1"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Customer profile\n"
+				ModulePermissions
+				{
+					Payment_Details
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Payment_Details={"View","Edit","Delete"}
+							Payment_Report={"View","Edit","Delete"}
+						}
+					}
+					Pricing_Details
+					{
+						enabled= Viewall,Modifyall,Import,Export 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Pricing_Details_Report={"View","Edit","Delete"}
+						}
+					}
+					Loyalty_Transactions
+					{
+						enabled= Viewall,Modifyall,Import,Export 
+						allFieldsVisible= true 
+					}
+					Document_Details
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Document_Details_Report={"View","Edit","Delete"}
+						}
+					}
+					Stock_Movements
+					{
+						enabled= Viewall,Modifyall,Import,Export 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Stock_Movements_Report={"View","Edit","Delete"}
+						}
+					}
+					Print_Orders
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Order_Status_Kanban={"View","Edit","Delete"}
+							Overdue_Orders={"View","Edit","Delete"}
+							All_Orders={"View","Edit","Delete"}
+							Upcoming_Orders_Report={"View","Edit","Delete"}
+							All_Print_Orders={"View","Edit","Delete"}
+							Customer_Order_History={"View","Edit","Delete"}
+						}
+					}
+					Custom
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Loyalty_Customers_Report={"View","Edit","Delete"}
+						}
+					}
+					Inventory_Details
+					{
+						enabled= Viewall,Modifyall,Import,Export 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Low_Stock_Report={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Admin"
+			{
+				name = "Admin"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Admin Profile\n"
+				ModulePermissions
+				{
+					Payment_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Payment_Details={"View","Edit"}
+							Payment_Report={"View","Edit"}
+						}
+					}
+					Pricing_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Pricing_Details_Report={"View","Edit"}
+						}
+					}
+					Loyalty_Transactions
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+					}
+					Document_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Document_Details_Report={"View","Edit","Delete"}
+						}
+					}
+					Stock_Movements
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Stock_Movements_Report={"View","Edit"}
+						}
+					}
+					Print_Orders
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Overdue_Orders={"View","Edit"}
+							Upcoming_Orders_Report={"View","Edit"}
+							All_Orders={"View","Edit"}
+							All_Print_Orders={"View","Edit"}
+							Customer_Order_History={"View","Edit"}
+						}
+					}
+					Custom
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Loyalty_Customers_Report={"View","Edit","Delete"}
+						}
+					}
+					Inventory_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Low_Stock_Report={"View","Edit"}
+						}
+					}
+				}
+			}
+			"Staff"
+			{
+				name = "Staff"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Staff Profile\n"
+				ModulePermissions
+				{
+					Payment_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Payment_Details={"View"}
+							Payment_Report={"View"}
+						}
+					}
+					Pricing_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Pricing_Details_Report={"View"}
+						}
+					}
+					Loyalty_Transactions
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+					}
+					Document_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Document_Details_Report={"View"}
+						}
+					}
+					Stock_Movements
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+					}
+					Print_Orders
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Overdue_Orders={"View"}
+							Upcoming_Orders_Report={"View"}
+							All_Orders={"View"}
+							All_Print_Orders={"View"}
+							Customer_Order_History={"View"}
+						}
+					}
+					Custom
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Loyalty_Customers_Report={"View"}
+						}
+					}
+					Inventory_Details
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Low_Stock_Report={"View"}
+						}
+					}
+				}
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+					"Staff"
+					{
+						description = ""
+					}
+				}
+			}
+	}
+
+	customize
+	{
+		icon
+		{
+			text = "XER"
+			background color = "theme"
+			foreground color = "#ffffff"
+		}
+	}
+
+	connections
+	{
+		zoho_crm_connection
+		(
+			displayname = "Zoho CRM Connection"
+			connector = zohocrm1
+			permissions = {"search_quotes_record","sync_invoices_record","sync_deals_record","sync_contacts_record","sync_cases_record","sync_campaigns_record","sync_accounts_record","search_vendors_record","search_solutions_record","search_sales_orders_record","sync_leads_record","search_purchase_orders_record","search_products_record","search_leads_record","search_invoices_record","search_deals_record","search_contacts_record","search_cases_record","search_campaigns_record","search_accounts_record","update_contacts_record","update_vendors_record","update_solutions_record","update_sales_orders_record","update_quotes_record","update_purchase_orders_record","update_products_record","update_leads_record","update_invoices_record","update_deals_record","list_all","update_cases_record","update_campaigns_record","update_accounts_record","sync_vendors_record","sync_solutions_record","sync_sales_orders_record","sync_quotes_record","sync_purchase_orders_record","sync_products_record","create_sales_orders_record","fetch_all_invoices_records","fetch_all_deals_records","fetch_all_contacts_records","fetch_all_cases_records","fetch_all_campaigns_records","fetch_all_accounts_records","fetch_accounts_record","create_vendors_record","create_solutions_record","fetch_all_leads_records","create_quotes_record","create_purchase_orders_record","create_products_record","create_leads_record","create_invoices_record","create_deals_record","create_contacts_record","create_cases_record","create_campaigns_record","fetch_contacts_record","fetch_vendors_record","fetch_solutions_record","fetch_sales_orders_record","fetch_quotes_record","fetch_purchase_orders_record","fetch_products_record","fetch_leads_record","fetch_invoices_record","fetch_deals_record","create_accounts_record","fetch_cases_record","fetch_campaigns_record","fetch_all_vendors_records","fetch_all_solutions_records","fetch_all_sales_orders_records","fetch_all_quotes_records","fetch_all_purchase_orders_records","fetch_all_products_records"}
+		)
+	}
+	web
+	{
+		forms
+		{
+			form Custom
+			{
+				label placement = left
+			}
+			form Document_Details
+			{
+				label placement = left
+			}
+			form Inventory_Details
+			{
+				label placement = left
+			}
+			form Loyalty_Transactions
+			{
+				label placement = left
+			}
+			form Payment_Details
+			{
+				label placement = left
+			}
+			form Pricing_Details
+			{
+				label placement = left
+			}
+			form Print_Orders
+			{
+				label placement = left
+			}
+			form Stock_Movements
+			{
+				label placement = left
+			}
+		}
+		reports
+		{
+			report Loyalty_Customers_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Customer_Name
+								Customer_ID
+								Phone_Number1 as "Phone_Number"
+								Loyalty_Points as "Loyalty Points"
+								Customer_Category as "Customer Category"
+								Feedback
+								Sentimental_Analysis_Feedback
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Customer_Name
+								Customer_ID
+								Phone_Number1 as "Phone_Number"
+								Email
+								Loyalty_Points as "Loyalty Points"
+								Customer_Category as "Customer Category"
+								Feedback
+								Sentimental_Analysis_Feedback
+								Address
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Orders
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+								Is_Overdue as "Is Overdue"
+								Order_Priority_Prediction as "AI_Order_Priority"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Payment_Details
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Payment_ID
+								Order
+								Amount
+								Payment_Method
+								Payment_Status
+								Payment_Date_Time as "Payment_Date-Time"
+								Loyalty_Points_Awarded
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Payment_ID
+								Order
+								Amount
+								Payment_Method
+								Payment_Status
+								Payment_Date_Time as "Payment_Date-Time"
+								Loyalty_Points_Awarded
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Print_Orders
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Payment_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Payment_ID
+								Order
+								Amount
+								Payment_Method
+								Payment_Status
+								Payment_Date_Time as "Payment_Date-Time"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Payment_ID
+								Order
+								Amount
+								Payment_Method
+								Payment_Status
+								Payment_Date_Time as "Payment_Date-Time"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Document_Details_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Document_ID
+								Orders as "Order"
+								Document_Name
+								File_Type
+								Page_Count
+								Document_Status
+								OCR_Extracted_Text
+								Document_File
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Document_ID
+								Orders as "Order"
+								Document_Name
+								File_Type
+								Page_Count
+								Document_Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Pricing_Details_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Pricing_Details
+								Print_Type
+								Rate_Per_Page
+								Paper_Size
+								Binding_Charge
+								Active
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Pricing_Details
+								Print_Type
+								Rate_Per_Page
+								Paper_Size
+								Binding_Charge
+								Active
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Customer_Order_History
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Overdue_Orders
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+								Order_Status as "Order Status"
+								Is_Overdue as "Is Overdue"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Stock_Movements_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Movement_ID as "Movement ID"
+								Inventory_Item as "Inventory Item"
+								Movement_Type as "Movement Type"
+								Quantity
+								Movement_Date as "Movement Date"
+								Reference
+								Notes
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Movement_ID as "Movement ID"
+								Inventory_Item as "Inventory Item"
+								Movement_Type as "Movement Type"
+								Quantity
+								Movement_Date as "Movement Date"
+								Reference
+								Notes
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Low_Stock_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Item_Name as "Item Name"
+								Current_Stock as "Current Stock"
+								Unit
+								Reorder_Level as "Reorder Level"
+								Stock_Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Inventory_ID as "Inventory ID"
+								Item_Name as "Item Name"
+								Item_Category as "Item Category"
+								Unit
+								Opening_Stock as "Opening Stock"
+								Current_Stock as "Current Stock"
+								Reorder_Level as "Reorder Level"
+								Unit_Cost as "Unit Cost"
+								Supplier_Name as "Supplier Name"
+								Last_Restocked as "Last Restocked"
+								Active
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Upcoming_Orders_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Order_Status as "Order Status"
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Order_Status_Kanban
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 2
+						datablock1
+						(
+							layout type = 4
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Total_Amount as "Total Amount"
+								Expected_Completion as "Expected Completion"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+							)
+						record
+						(
+							Edit 
+							View Record 
+    					)
+						)
+				)
+
+				detailview
+				(
+					layout
+					(
+						Order_Details_Block
+						(
+		     				title = "Order Details"
+							fields
+							(
+								Order_ID as "Order ID"
+								Customer
+								Print_Type as "Print Type"
+								Pages
+								Copies
+								Total_Amount as "Total Amount"
+								Order_Status as "Order Status"
+								Order_Priority as "Order Priority"
+								Expected_Completion as "Expected Completion"
+								Is_Overdue as "Is Overdue"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Inventory_Kanban
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								Inventory_ID as "Inventory ID"
+								Item_Name as "Item Name"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Inventory_ID as "Inventory ID"
+								Item_Name as "Item Name"
+								Item_Category as "Item Category"
+								Unit
+								Opening_Stock as "Opening Stock"
+								Current_Stock as "Current Stock"
+								Reorder_Level as "Reorder Level"
+								Unit_Cost as "Unit Cost"
+								Supplier_Name as "Supplier Name"
+								Last_Restocked as "Last Restocked"
+								Stock_Status
+								Active
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Transaction_Calender
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								Transaction_ID as "Transaction ID"
+								Customer
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Transaction_ID as "Transaction ID"
+								Customer
+								Payment
+								Points
+								Transaction_Type as "Transaction Type"
+								Transaction_Date as "Transaction Date"
+								Notes
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Location_Report
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								Customer_ID
+								Customer_Name
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Customer_ID
+								Customer_Name
+								Address
+								Phone_Number1 as "Phone_Number"
+								Email
+								Loyalty_Points as "Loyalty Points"
+								Customer_Category as "Customer Category"
+								Feedback
+								Sentimental_Analysis_Feedback
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Details
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Inventory_ID as "Inventory ID"
+								Item_Name as "Item Name"
+								Item_Category as "Item Category"
+								Unit
+								Opening_Stock as "Opening Stock"
+								Current_Stock as "Current Stock"
+								Reorder_Level as "Reorder Level"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit 
+							Duplicate 
+							Delete 
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record 
+    					)
+						on right click
+						(
+							Edit 
+							Delete 
+							Duplicate 
+							View Record 
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Inventory_ID as "Inventory ID"
+								Item_Name as "Item Name"
+								Item_Category as "Item Category"
+								Unit
+								Opening_Stock as "Opening Stock"
+								Current_Stock as "Current Stock"
+								Reorder_Level as "Reorder Level"
+								Unit_Cost as "Unit Cost"
+								Supplier_Name as "Supplier Name"
+								Last_Restocked as "Last Restocked"
+								Stock_Status
+								Active
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+		}
+		menu
+		{
+			unused
+			{
+				report All_Print_Orders
+				{
+					icon = "shopping-list"
+				}
+				report Payment_Report
+				{
+					icon = "shopping-receipt"
+				}
+			}
+			space Space
+			{
+				displayname = "Space"
+				icon = "objects-spaceship"
+
+				section Custom
+				{
+					displayname = "Custom"
+					icon = "design-web-design"
+					form  Custom
+					{
+						icon = "design-web-design"
+					}
+					report Loyalty_Customers_Report
+					{
+						icon = "tech-desktop"
+					}
+ 
+					report Sentiment_Chart
+					{
+						icon = "tech-desktop"
+					}
+					report Location_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section ZC_App_Preferences
+				{
+					displayname = "App Preferences"
+					icon = "design-app"
+					systemcomponent
+					{
+						type = localization
+						displayname = "Language Selection"
+						icon = "education-language"
+					}
+					systemcomponent
+					{
+						type = connection
+						displayname = "Integrations"
+						icon = "tech-2-connection"
+					}
+				}
+				section ZC_Approvals
+				{
+					displayname = "Approvals"
+					icon = "ui-2-hourglass"
+					systemcomponent
+					{
+						type = approval
+						approval status = pending
+						displayname = "Pending Tasks"
+						icon = "ui-2-hourglass"
+					}
+					systemcomponent
+					{
+						type = approval
+						approval status = completed
+						displayname = "Completed Tasks"
+						icon = "design-todo"
+					}
+				}
+				section SharedAnalytics_Section
+				{
+					type = shared_user_report_section
+					displayname = "Reports"
+					icon = "business-chart-bar-33"
+				}
+				section Orders
+				{
+					displayname = "Orders"
+					icon = "shopping-list"
+					form  Print_Orders
+					{
+						icon = "shopping-list"
+					}
+					report All_Orders
+					{
+						icon = "tech-desktop"
+					}
+					report Customer_Order_History
+					{
+						icon = "shopping-list"
+					}
+					report Overdue_Orders
+					{
+						icon = "shopping-list"
+					}
+					report Upcoming_Orders_Report
+					{
+						icon = "shopping-list"
+					}
+					report Order_Status_Kanban
+					{
+						icon = "health-heartbeat-16"
+					}
+				}
+				section Payment_Details
+				{
+					displayname = "Payment Details"
+					icon = "shopping-receipt"
+					form  Payment_Details
+					{
+						icon = "shopping-receipt"
+					}
+					report All_Payment_Details
+					{
+						icon = "tech-desktop"
+					}
+ 
+					report Pivot_Table
+					{
+						icon = "shopping-receipt"
+					}
+				}
+				section Document_Details
+				{
+					displayname = "Document_Details"
+					icon = "tech-desktop"
+					form  Document_Details
+					{
+						icon = "tech-desktop"
+					}
+					report Document_Details_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Pricing_Details
+				{
+					displayname = "Pricing_Details"
+					icon = "tech-desktop"
+					form  Pricing_Details
+					{
+						icon = "tech-desktop"
+					}
+					report Pricing_Details_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Shop_Dashboard
+				{
+					displayname = "Shop_Dashboard"
+					icon = "tech-desktop"
+					page Customer_Dashboard
+					{
+						icon = "tech-desktop"
+					}
+					page Shop_Dashboard
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Inventory_Details
+				{
+					displayname = "Inventory Details"
+					icon = "shopping-stock"
+					form  Inventory_Details
+					{
+						icon = "shopping-stock"
+					}
+					report Low_Stock_Report
+					{
+						icon = "shopping-stock"
+					}
+					report Inventory_Kanban
+					{
+						icon = "shopping-stock"
+					}
+					report All_Details
+					{
+						icon = "shopping-stock"
+					}
+				}
+				section Stock_Movements
+				{
+					displayname = "Stock_Movements"
+					icon = "tech-desktop"
+					form  Stock_Movements
+					{
+						icon = "tech-desktop"
+					}
+					report Stock_Movements_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Loyalty_Transactions
+				{
+					displayname = "Loyalty_Transactions"
+					icon = "tech-desktop"
+					form  Loyalty_Transactions
+					{
+						icon = "tech-desktop"
+					}
+					report Transaction_Calender
+					{
+						icon = "tech-desktop"
+					}
+				}
+					page Staff_Control_Center
+					{
+						icon = "media-1-focus-32"
+					}
+			}
+			preference
+			{
+				icon
+				{
+					style = outline
+				}
+			}
+		}
+		customize
+		{
+			font = "lato"
+			color options
+			{
+				color = "11"
+			}
+			logo
+			{
+				preference = "app_icon"
+				placement = "left"
+			}
+		}
+	}
+	phone
+	{
+		forms
+		{
+			form Custom
+			{
+				label placement = auto
+			}
+			form Document_Details
+			{
+				label placement = auto
+			}
+			form Inventory_Details
+			{
+				label placement = auto
+			}
+			form Loyalty_Transactions
+			{
+				label placement = auto
+			}
+			form Payment_Details
+			{
+				label placement = auto
+			}
+			form Pricing_Details
+			{
+				label placement = auto
+			}
+			form Print_Orders
+			{
+				label placement = auto
+			}
+			form Stock_Movements
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = twocolumn
+			font = "default"
+			style = "3"
+			color options
+			{
+				name = "custom_color_1"
+				brand color = "#e6e6fa"
+				navigation background color = "#9370db"
+				type = "custom"
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	tablet
+	{
+		forms
+		{
+			form Custom
+			{
+				label placement = auto
+			}
+			form Document_Details
+			{
+				label placement = auto
+			}
+			form Inventory_Details
+			{
+				label placement = auto
+			}
+			form Loyalty_Transactions
+			{
+				label placement = auto
+			}
+			form Payment_Details
+			{
+				label placement = auto
+			}
+			form Pricing_Details
+			{
+				label placement = auto
+			}
+			form Print_Orders
+			{
+				label placement = auto
+			}
+			form Stock_Movements
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "3"
+			color options
+			{
+				name = "custom_color_1"
+				brand color = "#e6e6fa"
+				navigation background color = "#9370db"
+				type = "custom"
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	translation
+{
+{"Language_Settings":{"LANGAGUE_WITH_LOGIN":"browser"}}
+}
+	reports configuration
+	{
+	
+		Version = 2000057348001
+		Key     = "Fm6FE1ySC2qydAh02f1g28NWaBhxuQONw8eHPkYDPBvSyMfrbfHnv3RNCTNmXdaPMxgqsxdUkP9AakwvqdAbWKKGrgq1dqyFsRwZ"
+	}
+}
